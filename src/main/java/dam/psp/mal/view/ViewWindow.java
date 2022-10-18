@@ -3,8 +3,6 @@ package dam.psp.mal.view;
 import dam.psp.mal.controller.Controller;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -56,6 +54,8 @@ public class ViewWindow extends JFrame implements WindowListener {
                 txtfBrowser.setText((String) listBrowser.getSelectedValue());
             }
         });
+//        txtfBrowser.addActionListener(controller);
+        // TODO
     }
 
     public void addBrowserHistory(String url) {
@@ -78,6 +78,10 @@ public class ViewWindow extends JFrame implements WindowListener {
         listModel.addElement("https://www.twitter.com");
         listModel.addElement("https://www.amazon.com");
         listModel.addElement("https://www.wikipedia.org");
+    }
+
+    public void alertUser(String title, String msg) {
+        JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     // GETTERS

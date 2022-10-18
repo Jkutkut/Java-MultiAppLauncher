@@ -1,13 +1,17 @@
 package dam.psp.mal.controller;
 
 import dam.psp.mal.view.ViewWindow;
+import jkutkut.InvalidDataException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Controller implements ActionListener {
+    private static final String VALID_WEBSITE = "^https?://(www2?\\.)?([a-zA-Z\\d]+\\.)+[a-zA-Z\\d]+/?$";
     private ViewWindow viewWindow;
 
     public Controller(ViewWindow viewWindow) {
@@ -29,9 +33,11 @@ public class Controller implements ActionListener {
                 else if (btn == this.viewWindow.getBtnBrowser())
                     browser();
             }
-            catch (Exception ex) {
-                ex.printStackTrace();
-                // TODO Alert user
+            catch (InvalidDataException ex) {
+                this.viewWindow.alertUser("Datos inválidos", ex.getMessage());
+            }
+            catch (IOException ex) {
+                this.viewWindow.alertUser("Error", ex.getMessage());
             }
         }
     }
