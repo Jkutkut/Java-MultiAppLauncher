@@ -40,18 +40,30 @@ public class Controller implements ActionListener {
         Process t = new ProcessBuilder("terminator").start();
     }
 
-    private void vscode() throws IOException {
-        Process t = new ProcessBuilder("code").start();
-    }
-
-    private void nautilus() throws IOException {
-        Process t = new ProcessBuilder("gnome-control-center").start();
-    }
-
-    private void browser() throws IOException {
+    private void browser() throws IOException, InvalidDataException {
         String url = this.viewWindow.getTxtfBrowser().getText();
-        Process t = new ProcessBuilder("open", url).start();
+        if (url == null || url.trim().isEmpty())
+            throw new InvalidDataException("URL inválida");
 
+        if (!url.matches(VALID_WEBSITE))
+            throw new InvalidDataException("URL inválida: La url no tiene sentido");
+        if (!pingWebsite(url))
+            throw new InvalidDataException("URL inválida: No se ha podido conectar con el dominio");
+        new ProcessBuilder("open", url).start();
         this.viewWindow.addBrowserHistory(url);
+    }
+
+    public static boolean pingWebsite(String url_s) {
+        try {
+            URL url = new URL(url_s);
+            HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+            huc.setRequestMethod("HEAD");
+            int responseCode = huc.getResponseCode();
+
+            return responseCode != 404;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }
