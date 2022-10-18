@@ -5,6 +5,7 @@ import dam.psp.mal.controller.Controller;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -30,6 +31,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(800, 500);
+        setMinimumSize(new Dimension(400, 400));
         addWindowListener(this);
 
         initComponents();
