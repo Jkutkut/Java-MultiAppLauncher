@@ -21,11 +21,11 @@ public class Controller implements ActionListener {
 
             try {
                 if (btn == this.viewWindow.getBtnTerminator())
-                    terminator();
+                    openApp("terminator");
                 else if (btn == this.viewWindow.getBtnVScode())
-                    vscode();
+                    openApp("code");
                 else if (btn == this.viewWindow.getBtnSettings())
-                    nautilus();
+                    openApp("gnome-control-center");
                 else if (btn == this.viewWindow.getBtnBrowser())
                     browser();
             }
@@ -36,8 +36,8 @@ public class Controller implements ActionListener {
         }
     }
 
-    private void terminator() throws IOException {
-        Process t = new ProcessBuilder("terminator").start();
+    private void openApp(String app) throws IOException {
+        Process t = new ProcessBuilder(app).start();
     }
 
     private void browser() throws IOException, InvalidDataException {
