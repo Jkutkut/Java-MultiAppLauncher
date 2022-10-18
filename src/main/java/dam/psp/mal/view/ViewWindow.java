@@ -26,6 +26,7 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     public ViewWindow() {
         setTitle(TITLE);
+        setIconImage(new ImageIcon("res/img/logo.png").getImage());
         setContentPane(jpMenu);
         pack();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

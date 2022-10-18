@@ -6,3 +6,7 @@
 	- Enter key opens url
 ## Features:
 - Responsive: The screen can be resized to fit any screen.
+- Logo: Custom logo made by Dall-E
+- 
+- 
+- 
