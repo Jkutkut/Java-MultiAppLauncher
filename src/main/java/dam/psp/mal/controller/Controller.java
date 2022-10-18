@@ -30,10 +30,10 @@ public class Controller implements ActionListener {
                     browser();
             }
             catch (Exception ex) {
-                ex.printStackTrace(); // Alert user
+                ex.printStackTrace();
+                // TODO Alert user
             }
         }
-        // TODO sobreescribir textf con seleccion de listBrowser
     }
 
     private void terminator() throws IOException {

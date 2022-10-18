@@ -40,11 +40,7 @@ public class ViewWindow extends JFrame implements WindowListener {
     private void initComponents() {
         // Fill list with browser history
         listModel = new DefaultListModel<>();
-        listModel.addElement("https://www.youtube.com");
-        listModel.addElement("https://www.instagram.com");
-        listModel.addElement("https://www.twitter.com");
-        listModel.addElement("https://www.amazon.com");
-        listModel.addElement("https://www.wikipedia.org");
+        loadBrowserHistory();
         listBrowser.setModel(listModel);
 
     }
@@ -54,12 +50,9 @@ public class ViewWindow extends JFrame implements WindowListener {
         btnVScode.addActionListener(controller);
         btnSettings.addActionListener(controller);
         btnBrowser.addActionListener(controller);
-        listBrowser.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    txtfBrowser.setText((String) listBrowser.getSelectedValue());
-                }
+        listBrowser.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                txtfBrowser.setText((String) listBrowser.getSelectedValue());
             }
         });
     }
@@ -74,6 +67,16 @@ public class ViewWindow extends JFrame implements WindowListener {
     }
 
     private void saveBrowserHistory() {
+        // TODO
+    }
+
+    private void loadBrowserHistory() {
+        // TODO
+        listModel.addElement("https://www.youtube.com");
+        listModel.addElement("https://www.instagram.com");
+        listModel.addElement("https://www.twitter.com");
+        listModel.addElement("https://www.amazon.com");
+        listModel.addElement("https://www.wikipedia.org");
     }
 
     // GETTERS
