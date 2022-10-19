@@ -11,7 +11,9 @@ import java.io.*;
 public class ViewWindow extends JFrame implements WindowListener {
 
     private static final String TITLE = "MultiAppLauncher";
+    private static final String DIRECTORY_FILE = "res/dirsandfiles";
     private static final String HISTORY_FILE = "res/browserHistory";
+    DefaultListModel<String> directoryModel;
     DefaultListModel<String> historyModel;
 
     private JPanel jpMenu;
@@ -22,7 +24,7 @@ public class ViewWindow extends JFrame implements WindowListener {
     private JPanel jpBrowser;
     private JTextField txtfBrowser;
     private JButton btnBrowser;
-    private JList listBrowser;
+    private JList lstBrowser;
     private JPanel jpDirectory;
     private JCheckBox chkbDirectory;
     private JList lstDirectory;
@@ -44,10 +46,15 @@ public class ViewWindow extends JFrame implements WindowListener {
     }
 
     private void initComponents() {
+        // Load directory model
+        directoryModel = new DefaultListModel<>();
+        loadDirectory();
+        lstDirectory.setModel(directoryModel);
+
         // Fill list with browser history
         historyModel = new DefaultListModel<>();
         loadBrowserHistory();
-        listBrowser.setModel(historyModel);
+        lstBrowser.setModel(historyModel);
         // TODO add hint to txtfs
     }
 
@@ -56,13 +63,17 @@ public class ViewWindow extends JFrame implements WindowListener {
         btnVScode.addActionListener(controller);
         btnSettings.addActionListener(controller);
         btnBrowser.addActionListener(controller);
-        listBrowser.addListSelectionListener(e -> {
+        lstBrowser.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                txtfBrowser.setText((String) listBrowser.getSelectedValue());
+                txtfBrowser.setText((String) lstBrowser.getSelectedValue());
             }
         });
         txtfBrowser.addActionListener(controller);
         chkbDirectory.addActionListener(controller);
+
+        // TODO keep code organized
+        btnDirectory.addActionListener(controller);
+        // txtfDirectory.addActionListener(controller); // TODO
     }
 
     // *************** TOOLS ***************
@@ -115,6 +126,25 @@ public class ViewWindow extends JFrame implements WindowListener {
     }
 
     // *************** Controller tools ***************
+
+    public void addDirectory(String dir) {
+        if (addElementToModel(directoryModel, dir))
+            saveModelInFile(directoryModel, dir);
+    }
+
+    public void loadDirectory() {
+        try {
+            loadModelFromFile(directoryModel, DIRECTORY_FILE);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Importing default directories");
+            directoryModel.addElement("~/");
+            directoryModel.addElement("~/Desktop");
+            directoryModel.addElement("~/Documents");
+            directoryModel.addElement("~/Images");
+        }
+    }
+
     public void addBrowserHistory(String url) {
         if (addElementToModel(historyModel, url))
             saveModelInFile(historyModel, HISTORY_FILE);
@@ -138,7 +168,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         jpDirectory.setVisible(chkbDirectory.isSelected());
     }
 
-    // GETTERS
+    // *************** GETTERS ***************
 
     public JButton getBtnTerminator() {
         return btnTerminator;
@@ -161,11 +191,19 @@ public class ViewWindow extends JFrame implements WindowListener {
     }
 
     public JList getListBrowser() {
-        return listBrowser;
+        return lstBrowser;
     }
 
     public JCheckBox getChkbDirectory() {
         return chkbDirectory;
+    }
+
+    public JButton getBtnDirectory() {
+        return btnDirectory;
+    }
+
+    public JTextField getTxtfDirectory() {
+        return txtfDirectory;
     }
 
     // WINDOW LISTENER

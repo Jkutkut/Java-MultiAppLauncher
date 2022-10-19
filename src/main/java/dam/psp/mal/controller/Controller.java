@@ -32,6 +32,8 @@ public class Controller implements ActionListener {
                     openApp("gnome-control-center");
                 else if (btn == this.viewWindow.getBtnBrowser())
                     browser();
+                else if (btn == this.viewWindow.getBtnDirectory())
+                    directory();
             }
             catch (InvalidDataException ex) {
                 this.viewWindow.alertUser("Datos inválidos", ex.getMessage());
@@ -90,5 +92,11 @@ public class Controller implements ActionListener {
         catch (Exception e) {
             return false;
         }
+    }
+
+    public void directory() {
+        String dir = viewWindow.getTxtfDirectory().getText();
+        // TODO validate
+        this.viewWindow.addDirectory(dir);
     }
 }
