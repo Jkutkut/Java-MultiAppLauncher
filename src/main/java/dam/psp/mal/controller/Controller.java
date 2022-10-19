@@ -33,7 +33,7 @@ public class Controller implements ActionListener {
                 else if (btn == this.viewWindow.getBtnBrowser())
                     browser();
                 else if (btn == this.viewWindow.getBtnCmd())
-                    directory();
+                    executeCmd();
             }
             catch (InvalidDataException ex) {
                 this.viewWindow.alertUser("Datos inválidos", ex.getMessage());
@@ -65,7 +65,13 @@ public class Controller implements ActionListener {
 
     private void openApp(String app) throws IOException {
         Process t = new ProcessBuilder(app).start();
-        // Process t = new ProcessBuilder("terminator", "-x", "sudo docker images; zsh").start();
+    }
+
+    private void executeCmd() throws IOException {
+        String cmd = this.viewWindow.getTxtfCmd().getText().trim();
+        if (cmd.isEmpty())
+            throw new InvalidDataException("Add a command to execute.");
+        Process t = new ProcessBuilder("terminator", "-x", cmd + "; zsh").start();
     }
 
     private void browser() throws IOException, InvalidDataException {
