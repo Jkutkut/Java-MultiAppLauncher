@@ -57,7 +57,6 @@ public class ViewWindow extends JFrame implements WindowListener {
         historyModel = new DefaultListModel<>();
         loadBrowserHistory();
         lstBrowser.setModel(historyModel);
-        // TODO add hint to txtfs
     }
 
     public void setController(Controller controller) {
@@ -142,9 +141,10 @@ public class ViewWindow extends JFrame implements WindowListener {
         }
         catch (FileNotFoundException e) {
             System.out.println("Importing default directories");
+            cmdModel.addElement("sl");
             cmdModel.addElement("sudo docker images");
             cmdModel.addElement("sudo docker ps -a");
-            cmdModel.addElement("sl");
+            cmdModel.addElement("sudo docker volume ls");
         }
     }
 
@@ -159,11 +159,10 @@ public class ViewWindow extends JFrame implements WindowListener {
         }
         catch (FileNotFoundException e) {
             System.out.println("Importing default browser history");
-            historyModel.addElement("https://www.youtube.com");
-            historyModel.addElement("https://www.instagram.com");
-            historyModel.addElement("https://www.twitter.com");
-            historyModel.addElement("https://www.amazon.com");
             historyModel.addElement("https://www.wikipedia.org");
+            historyModel.addElement("https://www.google.com");
+            historyModel.addElement("https://www.github.com");
+            historyModel.addElement("https://github.com/Jkutkut/Java-MultiAppLauncher");
         }
     }
 
@@ -248,9 +247,5 @@ public class ViewWindow extends JFrame implements WindowListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
 
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }

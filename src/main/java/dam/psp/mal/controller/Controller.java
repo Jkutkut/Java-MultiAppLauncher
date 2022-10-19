@@ -13,7 +13,7 @@ import java.net.URL;
 public class Controller implements ActionListener {
     private static final boolean SHELL = true;
     private static final boolean NO_SHELL = false;
-    private static final String VALID_WEBSITE = "^https?://(www2?\\.)?([a-zA-Z\\d]+\\.)+[a-zA-Z\\d]+/?$";
+    private static final String VALID_WEBSITE = "^https?://(www2?\\.)?[-a-zA-Z\\d@:%._\\+~#=]{1,256}\\.[a-zA-Z\\d()]{1,6}\\b([-a-zA-Z\\d()@:%_\\+.~#?&/=]*)$";
     private ViewWindow viewWindow;
 
     public Controller(ViewWindow viewWindow) {
