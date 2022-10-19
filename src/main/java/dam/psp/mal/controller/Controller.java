@@ -73,14 +73,14 @@ public class Controller implements ActionListener {
     }
 
     private void executeCmd(boolean shell) throws IOException {
-        String cmd = this.viewWindow.getTxtfCmd().getText().trim();
-        if (cmd.isEmpty())
+        String cmd = this.viewWindow.getTxtfCmd().getText();
+        if (cmd.trim().isEmpty())
             throw new InvalidDataException("Add a command to execute.");
-        this.viewWindow.addCmd(cmd);
         if (shell)
             new ProcessBuilder("terminator", "-x", cmd + "; zsh").start();
         else
-            new ProcessBuilder(cmd).start(); // TODO fix: terminator -x "echo hola; sleep 30"
+            new ProcessBuilder("terminator", "-x", "\"" + cmd + "\"").start();
+        this.viewWindow.addCmd(cmd);
     }
 
     private void browser() throws IOException, InvalidDataException {

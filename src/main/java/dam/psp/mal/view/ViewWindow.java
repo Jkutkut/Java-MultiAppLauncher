@@ -70,6 +70,11 @@ public class ViewWindow extends JFrame implements WindowListener {
                 txtfBrowser.setText((String) lstBrowser.getSelectedValue());
             }
         });
+        lstCmd.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                txtfCmd.setText((String) lstCmd.getSelectedValue());
+            }
+        });
         txtfBrowser.addActionListener(controller);
         chkbCmd.addActionListener(controller);
         btnCmd.addActionListener(controller);
@@ -117,13 +122,11 @@ public class ViewWindow extends JFrame implements WindowListener {
     }
 
     private boolean addElementToModel(DefaultListModel<String> listModel, String element) {
-        for (int i = 0; i < listModel.size(); i++) {
-            if (listModel.get(i).equals(element)) {
-                listModel.addElement(element);
-                return true;
-            }
-        }
-        return false;
+        for (int i = 0; i < listModel.size(); i++)
+            if (listModel.get(i).equals(element))
+                return false;
+        listModel.addElement(element);
+        return true;
     }
 
     // *************** Controller tools ***************
