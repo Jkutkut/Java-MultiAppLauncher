@@ -1,9 +1,5 @@
 ## TODO:
 - README
-- Add features
-    - Open apps in custom location
-    - Default locations
-- Add labels
 - REGEX url broken
 - Remove TODOs
 ## Features:
@@ -13,3 +9,7 @@
 - Custom error detection system: Custom exception handling system to detect and handle errors.
 - When entering the URL, if the enter key is pressed, the tab will open.
 - Default values in DB: if DB files are missing, default values are added.
+- Custom menu to execute cmds.
+	- Keeping the console alive after the cmd.
+	- Killing the console after the cmd.
+TODO sort

@@ -40,8 +40,8 @@ public class ViewWindow extends JFrame implements WindowListener {
         pack();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(800, 500);
-        setMinimumSize(new Dimension(500, 500));
+        setSize(800, 550);
+        setMinimumSize(new Dimension(500, 550));
         addWindowListener(this);
 
         initComponents();
