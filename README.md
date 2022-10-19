@@ -3,7 +3,8 @@
 - Add features
     - Open apps in custom location
     - Default locations
-
+- Add labels
+- Remove TODOs
 ## Features:
 - Responsive: The screen can be resized to fit any screen.
 - Logo: Custom logo made by Dall-E

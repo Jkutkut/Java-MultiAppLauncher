@@ -23,6 +23,11 @@ public class ViewWindow extends JFrame implements WindowListener {
     private JTextField txtfBrowser;
     private JButton btnBrowser;
     private JList listBrowser;
+    private JPanel jpDirectory;
+    private JCheckBox chkbDirectory;
+    private JList lstDirectory;
+    private JTextField txtfDirectory;
+    private JButton btnDirectory;
 
     public ViewWindow() {
         setTitle(TITLE);
@@ -32,7 +37,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(800, 500);
-        setMinimumSize(new Dimension(400, 400));
+        setMinimumSize(new Dimension(400, 400)); // TODO adjust
         addWindowListener(this);
 
         initComponents();
@@ -43,6 +48,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         historyModel = new DefaultListModel<>();
         loadBrowserHistory();
         listBrowser.setModel(historyModel);
+        // TODO add hint to txtfs
 
     }
 
@@ -184,5 +190,9 @@ public class ViewWindow extends JFrame implements WindowListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
