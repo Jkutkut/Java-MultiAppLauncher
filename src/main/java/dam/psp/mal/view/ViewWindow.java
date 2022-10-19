@@ -49,7 +49,6 @@ public class ViewWindow extends JFrame implements WindowListener {
         loadBrowserHistory();
         listBrowser.setModel(historyModel);
         // TODO add hint to txtfs
-
     }
 
     public void setController(Controller controller) {
@@ -63,6 +62,7 @@ public class ViewWindow extends JFrame implements WindowListener {
             }
         });
         txtfBrowser.addActionListener(controller);
+        chkbDirectory.addActionListener(controller);
     }
 
     public void addBrowserHistory(String url) {
@@ -126,6 +126,10 @@ public class ViewWindow extends JFrame implements WindowListener {
         JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public void updateDirectoryPane() {
+        jpDirectory.setVisible(chkbDirectory.isSelected());
+    }
+
     // GETTERS
 
     public JButton getBtnTerminator() {
@@ -150,6 +154,10 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     public JList getListBrowser() {
         return listBrowser;
+    }
+
+    public JCheckBox getChkbDirectory() {
+        return chkbDirectory;
     }
 
     // WINDOW LISTENER

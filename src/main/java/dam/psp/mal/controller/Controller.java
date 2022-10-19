@@ -54,6 +54,11 @@ public class Controller implements ActionListener {
                 }
             }
         }
+        else if (e.getSource() instanceof JCheckBox) {
+            JCheckBox chkb = (JCheckBox) e.getSource();
+            if (chkb == this.viewWindow.getChkbDirectory())
+                this.viewWindow.updateDirectoryPane();
+        }
     }
 
     private void openApp(String app) throws IOException {
