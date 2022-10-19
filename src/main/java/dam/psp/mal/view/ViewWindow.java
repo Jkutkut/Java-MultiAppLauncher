@@ -21,7 +21,6 @@ public class ViewWindow extends JFrame implements WindowListener {
     private JButton btnTerminator;
     private JButton btnVScode;
     private JButton btnSettings;
-    private JPanel jpBrowser;
     private JTextField txtfBrowser;
     private JButton btnBrowser;
     private JList lstBrowser;
@@ -30,6 +29,8 @@ public class ViewWindow extends JFrame implements WindowListener {
     private JList lstCmd;
     private JTextField txtfCmd;
     private JButton btnCmd;
+    private JScrollPane jspCmd;
+    private JScrollPane jspBrowser;
 
     public ViewWindow() {
         setTitle(TITLE);
@@ -39,7 +40,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(800, 500);
-        setMinimumSize(new Dimension(400, 400)); // TODO adjust
+        setMinimumSize(new Dimension(500, 500));
         addWindowListener(this);
 
         initComponents();
@@ -73,7 +74,7 @@ public class ViewWindow extends JFrame implements WindowListener {
 
         // TODO keep code organized
         btnCmd.addActionListener(controller);
-        // txtfDirectory.addActionListener(controller); // TODO
+//        txtfCmd.addActionListener(controller); // TODO
     }
 
     // *************** TOOLS ***************
