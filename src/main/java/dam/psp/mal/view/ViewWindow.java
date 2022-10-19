@@ -11,9 +11,9 @@ import java.io.*;
 public class ViewWindow extends JFrame implements WindowListener {
 
     private static final String TITLE = "MultiAppLauncher";
-    private static final String DIRECTORY_FILE = "res/dirsandfiles";
+    private static final String CMD_FILE = "res/cmds";
     private static final String HISTORY_FILE = "res/browserHistory";
-    DefaultListModel<String> directoryModel;
+    DefaultListModel<String> cmdModel;
     DefaultListModel<String> historyModel;
 
     private JPanel jpMenu;
@@ -25,11 +25,11 @@ public class ViewWindow extends JFrame implements WindowListener {
     private JTextField txtfBrowser;
     private JButton btnBrowser;
     private JList lstBrowser;
-    private JPanel jpDirectory;
-    private JCheckBox chkbDirectory;
-    private JList lstDirectory;
-    private JTextField txtfDirectory;
-    private JButton btnDirectory;
+    private JPanel jpCmd;
+    private JCheckBox chkbCmd;
+    private JList lstCmd;
+    private JTextField txtfCmd;
+    private JButton btnCmd;
 
     public ViewWindow() {
         setTitle(TITLE);
@@ -47,9 +47,9 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     private void initComponents() {
         // Load directory model
-        directoryModel = new DefaultListModel<>();
+        cmdModel = new DefaultListModel<>();
         loadDirectory();
-        lstDirectory.setModel(directoryModel);
+        lstCmd.setModel(cmdModel);
 
         // Fill list with browser history
         historyModel = new DefaultListModel<>();
@@ -69,10 +69,10 @@ public class ViewWindow extends JFrame implements WindowListener {
             }
         });
         txtfBrowser.addActionListener(controller);
-        chkbDirectory.addActionListener(controller);
+        chkbCmd.addActionListener(controller);
 
         // TODO keep code organized
-        btnDirectory.addActionListener(controller);
+        btnCmd.addActionListener(controller);
         // txtfDirectory.addActionListener(controller); // TODO
     }
 
@@ -128,20 +128,19 @@ public class ViewWindow extends JFrame implements WindowListener {
     // *************** Controller tools ***************
 
     public void addDirectory(String dir) {
-        if (addElementToModel(directoryModel, dir))
-            saveModelInFile(directoryModel, dir);
+        if (addElementToModel(cmdModel, dir))
+            saveModelInFile(cmdModel, dir);
     }
 
     public void loadDirectory() {
         try {
-            loadModelFromFile(directoryModel, DIRECTORY_FILE);
+            loadModelFromFile(cmdModel, CMD_FILE);
         }
         catch (FileNotFoundException e) {
             System.out.println("Importing default directories");
-            directoryModel.addElement("~/");
-            directoryModel.addElement("~/Desktop");
-            directoryModel.addElement("~/Documents");
-            directoryModel.addElement("~/Images");
+            cmdModel.addElement("sudo docker images");
+            cmdModel.addElement("sudo docker ps -a");
+            cmdModel.addElement("sl");
         }
     }
 
@@ -165,7 +164,7 @@ public class ViewWindow extends JFrame implements WindowListener {
     }
 
     public void updateDirectoryPane() {
-        jpDirectory.setVisible(chkbDirectory.isSelected());
+        jpCmd.setVisible(chkbCmd.isSelected());
     }
 
     // *************** GETTERS ***************
@@ -194,16 +193,20 @@ public class ViewWindow extends JFrame implements WindowListener {
         return lstBrowser;
     }
 
-    public JCheckBox getChkbDirectory() {
-        return chkbDirectory;
+    public JCheckBox getChkbCmd() {
+        return chkbCmd;
     }
 
-    public JButton getBtnDirectory() {
-        return btnDirectory;
+    public JButton getBtnCmd() {
+        return btnCmd;
     }
 
-    public JTextField getTxtfDirectory() {
-        return txtfDirectory;
+    public JTextField getTxtfCmd() {
+        return txtfCmd;
+    }
+
+    public JList getListDirectory() {
+        return lstCmd;
     }
 
     // WINDOW LISTENER
@@ -215,7 +218,8 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

@@ -4,6 +4,7 @@
     - Open apps in custom location
     - Default locations
 - Add labels
+- REGEX url broken
 - Remove TODOs
 ## Features:
 - Responsive: The screen can be resized to fit any screen.

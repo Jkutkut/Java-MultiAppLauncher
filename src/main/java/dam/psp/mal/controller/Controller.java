@@ -32,7 +32,7 @@ public class Controller implements ActionListener {
                     openApp("gnome-control-center");
                 else if (btn == this.viewWindow.getBtnBrowser())
                     browser();
-                else if (btn == this.viewWindow.getBtnDirectory())
+                else if (btn == this.viewWindow.getBtnCmd())
                     directory();
             }
             catch (InvalidDataException ex) {
@@ -58,13 +58,14 @@ public class Controller implements ActionListener {
         }
         else if (e.getSource() instanceof JCheckBox) {
             JCheckBox chkb = (JCheckBox) e.getSource();
-            if (chkb == this.viewWindow.getChkbDirectory())
+            if (chkb == this.viewWindow.getChkbCmd())
                 this.viewWindow.updateDirectoryPane();
         }
     }
 
     private void openApp(String app) throws IOException {
         Process t = new ProcessBuilder(app).start();
+        // Process t = new ProcessBuilder("terminator", "-x", "sudo docker images; zsh").start();
     }
 
     private void browser() throws IOException, InvalidDataException {
@@ -95,7 +96,7 @@ public class Controller implements ActionListener {
     }
 
     public void directory() {
-        String dir = viewWindow.getTxtfDirectory().getText();
+        String dir = viewWindow.getTxtfCmd().getText();
         // TODO validate
         this.viewWindow.addDirectory(dir);
     }
