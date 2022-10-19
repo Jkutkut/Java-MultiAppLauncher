@@ -1,9 +1,7 @@
 ## TODO:
 - README
-- Store file as DB
 - Add features
     - Open apps in custom location
-    - Default URLs
     - Default locations
 
 ## Features:

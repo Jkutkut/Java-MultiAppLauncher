@@ -6,10 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.*;
 
 public class ViewWindow extends JFrame implements WindowListener {
 
     private static final String TITLE = "MultiAppLauncher";
+    private static final String HISTORY_FILE = "res/browserHistory";
     DefaultListModel<String> listModel;
 
     private JPanel jpMenu;
@@ -63,20 +65,55 @@ public class ViewWindow extends JFrame implements WindowListener {
                 return;
         }
         listModel.addElement(url);
-        saveBrowserHistory();
-    }
-
-    private void saveBrowserHistory() {
-        // TODO
+        saveModelInFile(listModel, HISTORY_FILE);
     }
 
     private void loadBrowserHistory() {
-        // TODO
-        listModel.addElement("https://www.youtube.com");
-        listModel.addElement("https://www.instagram.com");
-        listModel.addElement("https://www.twitter.com");
-        listModel.addElement("https://www.amazon.com");
-        listModel.addElement("https://www.wikipedia.org");
+        try {
+            loadModelFromFile(listModel, HISTORY_FILE);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Importing default browser history");
+            listModel.addElement("https://www.youtube.com");
+            listModel.addElement("https://www.instagram.com");
+            listModel.addElement("https://www.twitter.com");
+            listModel.addElement("https://www.amazon.com");
+            listModel.addElement("https://www.wikipedia.org");
+        }
+    }
+
+    private static void saveModelInFile(DefaultListModel<String> model, String filename) {
+        filename = filename + ".bat";
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+            for (int i = 0; i < model.size(); i++) {
+                oos.writeObject(model.get(i));
+            }
+            oos.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadModelFromFile(DefaultListModel<String> listModel, String filename) throws FileNotFoundException {
+        filename = filename + ".bat";
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+            while (true) {
+                listModel.addElement((String) ois.readObject());
+            }
+        }
+        catch (FileNotFoundException e) {
+            System.out.println(filename + " not found");
+            throw new FileNotFoundException(e.getMessage());
+        }
+        catch (EOFException e) {
+            System.out.println("Fully loaded " + filename);
+        }
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void alertUser(String title, String msg) {
