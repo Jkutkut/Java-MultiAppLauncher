@@ -40,6 +40,20 @@ public class Controller implements ActionListener {
                 this.viewWindow.alertUser("Error", ex.getMessage());
             }
         }
+        else if (e.getSource() instanceof JTextField) {
+            JTextField txtf = (JTextField) e.getSource();
+            if (txtf == this.viewWindow.getTxtfBrowser()) {
+                try {
+                    browser();
+                }
+                catch (InvalidDataException ex) {
+                    this.viewWindow.alertUser("Datos inválidos", ex.getMessage());
+                }
+                catch (IOException ex) {
+                    this.viewWindow.alertUser("Error", ex.getMessage());
+                }
+            }
+        }
     }
 
     private void openApp(String app) throws IOException {

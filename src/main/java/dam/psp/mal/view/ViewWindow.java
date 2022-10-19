@@ -54,8 +54,7 @@ public class ViewWindow extends JFrame implements WindowListener {
                 txtfBrowser.setText((String) listBrowser.getSelectedValue());
             }
         });
-//        txtfBrowser.addActionListener(controller);
-        // TODO
+        txtfBrowser.addActionListener(controller);
     }
 
     public void addBrowserHistory(String url) {
