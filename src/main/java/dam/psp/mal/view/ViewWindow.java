@@ -12,7 +12,7 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     private static final String TITLE = "MultiAppLauncher";
     private static final String HISTORY_FILE = "res/browserHistory";
-    DefaultListModel<String> listModel;
+    DefaultListModel<String> historyModel;
 
     private JPanel jpMenu;
     private JPanel jpBotonera;
@@ -40,9 +40,9 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     private void initComponents() {
         // Fill list with browser history
-        listModel = new DefaultListModel<>();
+        historyModel = new DefaultListModel<>();
         loadBrowserHistory();
-        listBrowser.setModel(listModel);
+        listBrowser.setModel(historyModel);
 
     }
 
@@ -60,25 +60,25 @@ public class ViewWindow extends JFrame implements WindowListener {
     }
 
     public void addBrowserHistory(String url) {
-        for (int i = 0; i < listModel.size(); i++) {
-            if (listModel.get(i).equals(url))
+        for (int i = 0; i < historyModel.size(); i++) {
+            if (historyModel.get(i).equals(url))
                 return;
         }
-        listModel.addElement(url);
-        saveModelInFile(listModel, HISTORY_FILE);
+        historyModel.addElement(url);
+        saveModelInFile(historyModel, HISTORY_FILE);
     }
 
     private void loadBrowserHistory() {
         try {
-            loadModelFromFile(listModel, HISTORY_FILE);
+            loadModelFromFile(historyModel, HISTORY_FILE);
         }
         catch (FileNotFoundException e) {
             System.out.println("Importing default browser history");
-            listModel.addElement("https://www.youtube.com");
-            listModel.addElement("https://www.instagram.com");
-            listModel.addElement("https://www.twitter.com");
-            listModel.addElement("https://www.amazon.com");
-            listModel.addElement("https://www.wikipedia.org");
+            historyModel.addElement("https://www.youtube.com");
+            historyModel.addElement("https://www.instagram.com");
+            historyModel.addElement("https://www.twitter.com");
+            historyModel.addElement("https://www.amazon.com");
+            historyModel.addElement("https://www.wikipedia.org");
         }
     }
 
