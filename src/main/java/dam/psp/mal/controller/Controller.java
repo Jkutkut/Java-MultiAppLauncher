@@ -11,6 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Controller implements ActionListener {
+    private static final boolean SHELL = true;
+    private static final boolean NO_SHELL = false;
     private static final String VALID_WEBSITE = "^https?://(www2?\\.)?([a-zA-Z\\d]+\\.)+[a-zA-Z\\d]+/?$";
     private ViewWindow viewWindow;
 
@@ -33,7 +35,9 @@ public class Controller implements ActionListener {
                 else if (btn == this.viewWindow.getBtnBrowser())
                     browser();
                 else if (btn == this.viewWindow.getBtnCmd())
-                    executeCmd();
+                    executeCmd(NO_SHELL);
+                else if (btn == this.viewWindow.getBtnCmdShell())
+                    executeCmd(SHELL);
             }
             catch (InvalidDataException ex) {
                 this.viewWindow.alertUser("Datos inválidos", ex.getMessage());
@@ -44,16 +48,17 @@ public class Controller implements ActionListener {
         }
         else if (e.getSource() instanceof JTextField) {
             JTextField txtf = (JTextField) e.getSource();
-            if (txtf == this.viewWindow.getTxtfBrowser()) {
-                try {
+            try {
+                if (txtf == this.viewWindow.getTxtfBrowser())
                     browser();
-                }
-                catch (InvalidDataException ex) {
-                    this.viewWindow.alertUser("Datos inválidos", ex.getMessage());
-                }
-                catch (IOException ex) {
-                    this.viewWindow.alertUser("Error", ex.getMessage());
-                }
+                else if (txtf == this.viewWindow.getTxtfCmd())
+                    executeCmd(SHELL);
+            }
+            catch (InvalidDataException ex) {
+                this.viewWindow.alertUser("Datos inválidos", ex.getMessage());
+            }
+            catch (IOException ex) {
+                this.viewWindow.alertUser("Error", ex.getMessage());
             }
         }
         else if (e.getSource() instanceof JCheckBox) {
@@ -67,11 +72,15 @@ public class Controller implements ActionListener {
         Process t = new ProcessBuilder(app).start();
     }
 
-    private void executeCmd() throws IOException {
+    private void executeCmd(boolean shell) throws IOException {
         String cmd = this.viewWindow.getTxtfCmd().getText().trim();
         if (cmd.isEmpty())
             throw new InvalidDataException("Add a command to execute.");
-        Process t = new ProcessBuilder("terminator", "-x", cmd + "; zsh").start();
+        this.viewWindow.addCmd(cmd);
+        if (shell)
+            new ProcessBuilder("terminator", "-x", cmd + "; zsh").start();
+        else
+            new ProcessBuilder(cmd).start(); // TODO fix: terminator -x "echo hola; sleep 30"
     }
 
     private void browser() throws IOException, InvalidDataException {
@@ -99,11 +108,5 @@ public class Controller implements ActionListener {
         catch (Exception e) {
             return false;
         }
-    }
-
-    public void directory() {
-        String dir = viewWindow.getTxtfCmd().getText();
-        // TODO validate
-        this.viewWindow.addDirectory(dir);
     }
 }

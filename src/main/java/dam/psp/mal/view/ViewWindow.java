@@ -31,6 +31,7 @@ public class ViewWindow extends JFrame implements WindowListener {
     private JButton btnCmd;
     private JScrollPane jspCmd;
     private JScrollPane jspBrowser;
+    private JButton btnCmdShell;
 
     public ViewWindow() {
         setTitle(TITLE);
@@ -49,7 +50,7 @@ public class ViewWindow extends JFrame implements WindowListener {
     private void initComponents() {
         // Load directory model
         cmdModel = new DefaultListModel<>();
-        loadDirectory();
+        loadCmds();
         lstCmd.setModel(cmdModel);
 
         // Fill list with browser history
@@ -71,10 +72,9 @@ public class ViewWindow extends JFrame implements WindowListener {
         });
         txtfBrowser.addActionListener(controller);
         chkbCmd.addActionListener(controller);
-
-        // TODO keep code organized
         btnCmd.addActionListener(controller);
-//        txtfCmd.addActionListener(controller); // TODO
+        btnCmdShell.addActionListener(controller);
+        txtfCmd.addActionListener(controller);
     }
 
     // *************** TOOLS ***************
@@ -128,12 +128,12 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     // *************** Controller tools ***************
 
-    public void addDirectory(String dir) {
-        if (addElementToModel(cmdModel, dir))
-            saveModelInFile(cmdModel, dir);
+    public void addCmd(String cmd) {
+        if (addElementToModel(cmdModel, cmd))
+            saveModelInFile(cmdModel, CMD_FILE);
     }
 
-    public void loadDirectory() {
+    public void loadCmds() {
         try {
             loadModelFromFile(cmdModel, CMD_FILE);
         }
@@ -190,10 +190,6 @@ public class ViewWindow extends JFrame implements WindowListener {
         return txtfBrowser;
     }
 
-    public JList getListBrowser() {
-        return lstBrowser;
-    }
-
     public JCheckBox getChkbCmd() {
         return chkbCmd;
     }
@@ -206,8 +202,8 @@ public class ViewWindow extends JFrame implements WindowListener {
         return txtfCmd;
     }
 
-    public JList getListDirectory() {
-        return lstCmd;
+    public JButton getBtnCmdShell() {
+        return btnCmdShell;
     }
 
     // WINDOW LISTENER
