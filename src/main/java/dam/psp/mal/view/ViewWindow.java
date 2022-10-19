@@ -65,29 +65,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         chkbDirectory.addActionListener(controller);
     }
 
-    public void addBrowserHistory(String url) {
-        for (int i = 0; i < historyModel.size(); i++) {
-            if (historyModel.get(i).equals(url))
-                return;
-        }
-        historyModel.addElement(url);
-        saveModelInFile(historyModel, HISTORY_FILE);
-    }
-
-    private void loadBrowserHistory() {
-        try {
-            loadModelFromFile(historyModel, HISTORY_FILE);
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("Importing default browser history");
-            historyModel.addElement("https://www.youtube.com");
-            historyModel.addElement("https://www.instagram.com");
-            historyModel.addElement("https://www.twitter.com");
-            historyModel.addElement("https://www.amazon.com");
-            historyModel.addElement("https://www.wikipedia.org");
-        }
-    }
-
+    // *************** TOOLS ***************
     private static void saveModelInFile(DefaultListModel<String> model, String filename) {
         filename = filename + ".bat";
         try {
@@ -124,6 +102,36 @@ public class ViewWindow extends JFrame implements WindowListener {
 
     public void alertUser(String title, String msg) {
         JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private boolean addElementToModel(DefaultListModel<String> listModel, String element) {
+        for (int i = 0; i < listModel.size(); i++) {
+            if (listModel.get(i).equals(element)) {
+                listModel.addElement(element);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // *************** Controller tools ***************
+    public void addBrowserHistory(String url) {
+        if (addElementToModel(historyModel, url))
+            saveModelInFile(historyModel, HISTORY_FILE);
+    }
+
+    private void loadBrowserHistory() {
+        try {
+            loadModelFromFile(historyModel, HISTORY_FILE);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Importing default browser history");
+            historyModel.addElement("https://www.youtube.com");
+            historyModel.addElement("https://www.instagram.com");
+            historyModel.addElement("https://www.twitter.com");
+            historyModel.addElement("https://www.amazon.com");
+            historyModel.addElement("https://www.wikipedia.org");
+        }
     }
 
     public void updateDirectoryPane() {
