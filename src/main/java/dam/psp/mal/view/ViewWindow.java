@@ -17,21 +17,18 @@ public class ViewWindow extends JFrame implements WindowListener {
     DefaultListModel<String> historyModel;
 
     private JPanel jpMenu;
-    private JPanel jpBotonera;
     private JButton btnTerminator;
     private JButton btnVScode;
     private JButton btnSettings;
     private JTextField txtfBrowser;
     private JButton btnBrowser;
-    private JList lstBrowser;
-    private JPanel jpCmd;
+    private JList<String> lstBrowser;
     private JCheckBox chkbCmd;
-    private JList lstCmd;
+    private JList<String> lstCmd;
     private JTextField txtfCmd;
     private JButton btnCmd;
-    private JScrollPane jspCmd;
-    private JScrollPane jspBrowser;
     private JButton btnCmdShell;
+    private JPanel jpCmd;
 
     public ViewWindow() {
         setTitle(TITLE);
@@ -66,13 +63,13 @@ public class ViewWindow extends JFrame implements WindowListener {
         btnBrowser.addActionListener(controller);
         lstBrowser.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                txtfBrowser.setText((String) lstBrowser.getSelectedValue());
+                txtfBrowser.setText(lstBrowser.getSelectedValue());
             }
         });
         lstBrowser.addKeyListener(jListListener);
         lstCmd.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                txtfCmd.setText((String) lstCmd.getSelectedValue());
+                txtfCmd.setText(lstCmd.getSelectedValue());
             }
         });
         lstCmd.addKeyListener(jListListener);
@@ -130,7 +127,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         return true;
     }
 
-    public void deleteSelected(JList lst) {
+    public void deleteSelected(JList<String> lst) {
         if (lst == lstBrowser) {
             historyModel.removeElement(lstBrowser.getSelectedValue());
             saveModelInFile(historyModel, HISTORY_FILE);

@@ -13,8 +13,8 @@ import java.net.URL;
 public class Controller implements ActionListener {
     private static final boolean SHELL = true;
     private static final boolean NO_SHELL = false;
-    private static final String VALID_WEBSITE = "^https?://(www2?\\.)?[-a-zA-Z\\d@:%._\\+~#=]{1,256}\\.[a-zA-Z\\d()]{1,6}\\b([-a-zA-Z\\d()@:%_\\+.~#?&/=]*)$";
-    private ViewWindow viewWindow;
+    private static final String VALID_WEBSITE = "^https?://(www2?\\.)?[-a-zA-Z\\d@:%._+~#=]{1,256}\\.[a-zA-Z\\d()]{1,6}\\b([-a-zA-Z\\d()@:%_+.~#?&/=]*)$";
+    private final ViewWindow viewWindow;
 
     public Controller(ViewWindow viewWindow) {
         this.viewWindow = viewWindow;
@@ -22,9 +22,7 @@ public class Controller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton) {
-            JButton btn = (JButton) e.getSource();
-
+        if (e.getSource() instanceof JButton btn) {
             try {
                 if (btn == this.viewWindow.getBtnTerminator())
                     openApp("terminator");
@@ -46,8 +44,7 @@ public class Controller implements ActionListener {
                 this.viewWindow.alertUser("Error", ex.getMessage());
             }
         }
-        else if (e.getSource() instanceof JTextField) {
-            JTextField txtf = (JTextField) e.getSource();
+        else if (e.getSource() instanceof JTextField txtf) {
             try {
                 if (txtf == this.viewWindow.getTxtfBrowser())
                     browser();
@@ -61,21 +58,19 @@ public class Controller implements ActionListener {
                 this.viewWindow.alertUser("Error", ex.getMessage());
             }
         }
-        else if (e.getSource() instanceof JCheckBox) {
-            JCheckBox chkb = (JCheckBox) e.getSource();
+        else if (e.getSource() instanceof JCheckBox chkb) {
             if (chkb == this.viewWindow.getChkbCmd())
                 this.viewWindow.updateDirectoryPane();
         }
-        else if (e.getSource() instanceof JList) {
-            JList lst = (JList) e.getSource();
-            if (e.getActionCommand() == "delete") {
+        else if (e.getSource() instanceof JList lst) {
+            if (e.getActionCommand().equals("delete")) {
                 this.viewWindow.deleteSelected(lst);
             }
         }
     }
 
     private void openApp(String app) throws IOException {
-        Process t = new ProcessBuilder(app).start();
+        new ProcessBuilder(app).start();
     }
 
     private void executeCmd(boolean shell) throws IOException {

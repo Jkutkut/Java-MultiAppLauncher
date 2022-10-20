@@ -15,16 +15,13 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ViewWindow viewWindow = new ViewWindow();
+        EventQueue.invokeLater(() -> {
+            ViewWindow viewWindow = new ViewWindow();
 
-                Controller controller = new Controller(viewWindow);
-                JListListener jListListener = new JListListener(controller);
-                viewWindow.setController(controller, jListListener);
-                viewWindow.setVisible(true);
-            }
+            Controller controller = new Controller(viewWindow);
+            JListListener jListListener = new JListListener(controller);
+            viewWindow.setController(controller, jListListener);
+            viewWindow.setVisible(true);
         });
     }
 }
