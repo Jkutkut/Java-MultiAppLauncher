@@ -11,5 +11,6 @@ Simple application to start processes in Java using Java Swing.
 - Website validation: The website is validated by regex and the server is pinned before opening the tab.
 - When entering the URL, if the enter key is pressed, the tab will open.
 - Default values in DB: if DB files are missing, default values are added.
+- Delete key in lists deletes the element (also saves the state on the DB).
 - DarkMode: The only serious theme.
 - Logo: Custom logo made by Dall-E

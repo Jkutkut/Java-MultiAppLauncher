@@ -2,6 +2,7 @@ package dam.psp.mal.main;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import dam.psp.mal.controller.Controller;
+import dam.psp.mal.controller.JListListener;
 import dam.psp.mal.view.ViewWindow;
 
 import javax.swing.*;
@@ -20,7 +21,8 @@ public class Main {
                 ViewWindow viewWindow = new ViewWindow();
 
                 Controller controller = new Controller(viewWindow);
-                viewWindow.setController(controller);
+                JListListener jListListener = new JListListener(controller);
+                viewWindow.setController(controller, jListListener);
                 viewWindow.setVisible(true);
             }
         });

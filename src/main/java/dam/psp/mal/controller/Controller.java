@@ -66,6 +66,12 @@ public class Controller implements ActionListener {
             if (chkb == this.viewWindow.getChkbCmd())
                 this.viewWindow.updateDirectoryPane();
         }
+        else if (e.getSource() instanceof JList) {
+            JList lst = (JList) e.getSource();
+            if (e.getActionCommand() == "delete") {
+                this.viewWindow.deleteSelected(lst);
+            }
+        }
     }
 
     private void openApp(String app) throws IOException {

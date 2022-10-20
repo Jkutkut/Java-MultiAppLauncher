@@ -1,11 +1,11 @@
 package dam.psp.mal.view;
 
 import dam.psp.mal.controller.Controller;
+import dam.psp.mal.controller.JListListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.io.*;
 
 public class ViewWindow extends JFrame implements WindowListener {
@@ -59,7 +59,7 @@ public class ViewWindow extends JFrame implements WindowListener {
         lstBrowser.setModel(historyModel);
     }
 
-    public void setController(Controller controller) {
+    public void setController(Controller controller, JListListener jListListener) {
         btnTerminator.addActionListener(controller);
         btnVScode.addActionListener(controller);
         btnSettings.addActionListener(controller);
@@ -69,11 +69,13 @@ public class ViewWindow extends JFrame implements WindowListener {
                 txtfBrowser.setText((String) lstBrowser.getSelectedValue());
             }
         });
+        lstBrowser.addKeyListener(jListListener);
         lstCmd.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 txtfCmd.setText((String) lstCmd.getSelectedValue());
             }
         });
+        lstCmd.addKeyListener(jListListener);
         txtfBrowser.addActionListener(controller);
         chkbCmd.addActionListener(controller);
         btnCmd.addActionListener(controller);
@@ -128,6 +130,17 @@ public class ViewWindow extends JFrame implements WindowListener {
         return true;
     }
 
+    public void deleteSelected(JList lst) {
+        if (lst == lstBrowser) {
+            historyModel.removeElement(lstBrowser.getSelectedValue());
+            saveModelInFile(historyModel, HISTORY_FILE);
+        }
+        else if (lst == lstCmd) {
+            cmdModel.removeElement(lstCmd.getSelectedValue());
+            saveModelInFile(cmdModel, CMD_FILE);
+        }
+    }
+
     // *************** Controller tools ***************
 
     public void addCmd(String cmd) {
@@ -143,7 +156,7 @@ public class ViewWindow extends JFrame implements WindowListener {
             System.out.println("Importing default directories");
             cmdModel.addElement("sl");
             cmdModel.addElement("sudo docker start odooDB; sudo docker start odoo -a");
-            cmdModel.addElement("sudo docker stop odooDB; sudo docker stop odoo");
+            cmdModel.addElement("sudo docker stop odoo; sudo docker stop odooDB");
             cmdModel.addElement("sudo docker images");
             cmdModel.addElement("sudo docker ps -a");
             cmdModel.addElement("sudo docker volume ls");
