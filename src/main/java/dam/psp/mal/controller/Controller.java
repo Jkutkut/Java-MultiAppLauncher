@@ -79,7 +79,7 @@ public class Controller implements ActionListener {
         if (shell)
             new ProcessBuilder("terminator", "-x", cmd + "; zsh").start();
         else
-            new ProcessBuilder("terminator", "-x", "\"" + cmd + "\"").start();
+            new ProcessBuilder("terminator", "-x", cmd).start();
         this.viewWindow.addCmd(cmd);
     }
 

@@ -142,6 +142,8 @@ public class ViewWindow extends JFrame implements WindowListener {
         catch (FileNotFoundException e) {
             System.out.println("Importing default directories");
             cmdModel.addElement("sl");
+            cmdModel.addElement("sudo docker start odooDB; sudo docker start odoo -a");
+            cmdModel.addElement("sudo docker stop odooDB; sudo docker stop odoo");
             cmdModel.addElement("sudo docker images");
             cmdModel.addElement("sudo docker ps -a");
             cmdModel.addElement("sudo docker volume ls");
@@ -159,10 +161,12 @@ public class ViewWindow extends JFrame implements WindowListener {
         }
         catch (FileNotFoundException e) {
             System.out.println("Importing default browser history");
+            historyModel.addElement("https://github.com/Jkutkut/Java-MultiAppLauncher");
             historyModel.addElement("https://www.wikipedia.org");
             historyModel.addElement("https://www.google.com");
             historyModel.addElement("https://www.github.com");
-            historyModel.addElement("https://github.com/Jkutkut/Java-MultiAppLauncher");
+            historyModel.addElement("https://www.stackoverflow.com");
+            historyModel.addElement("https://hub.docker.com/");
         }
     }
 
